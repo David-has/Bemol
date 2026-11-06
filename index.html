@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ro" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bemol – Jazz club live cu pian cu coadă</title>
+<meta name="description" content="Bemol: jazz live șase seri pe săptămână, 80 de locuri și un pian la care poți cânta chiar în pagină. Vezi programul și rezervă o masă.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="wipe" id="wipe" aria-hidden="true"></div>
+
+<header class="site-header" id="header">
+  <a class="brand" href="#top" aria-label="Bemol, acasă">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 3v26M10 18c3-4 12-4 12 3 0 5-6 7-12 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span>Bemol</span>
+  </a>
+  <nav class="nav" aria-label="Principal">
+    <a href="#program">Program</a>
+    <a href="#pian">Pian</a>
+    <a href="#meniu">Meniu</a>
+    <a href="#rezervari">Rezervări</a>
+    <a href="#locul">Locul</a>
+  </nav>
+  <div class="tools">
+    <button class="icon-btn" id="soundBtn" type="button" aria-pressed="true" aria-label="Sunet activat">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path class="waves" d="M16 9a4 4 0 010 6M18.500 6.500a8 8 0 010 11"/><path class="mute" d="M16 9l5 6M21 9l-5 6"/></svg>
+    </button>
+    <button class="icon-btn theme-btn" id="themeBtn" type="button" role="switch" aria-checked="false" aria-label="Mod luminos"><i></i></button>
+    <a class="btn btn-sm" href="#rezervari">Rezervă</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="bg" aria-hidden="true">
+    <div class="haze hz1"></div>
+    <div class="haze hz2"></div>
+    <div class="vinyl"><i></i></div>
+    <div class="beam bm1"></div>
+    <div class="beam bm2"></div>
+    <div class="beam bm3"></div>
+    <canvas id="dust"></canvas>
+  </div>
+
+  <div class="hero-copy">
+    <div class="neon" aria-hidden="true">Live ♪</div>
+    <h1>
+      <span class="ln"><span>Jazz live,</span></span>
+      <span class="ln"><span>în fiecare seară,</span></span>
+      <span class="ln"><span>la lumina lumânărilor.</span></span>
+    </h1>
+    <p class="lead">Șase seri pe săptămână, un pian cu coadă și 80 de locuri. Vino să asculți de aproape.</p>
+    <div class="hero-actions">
+      <a class="btn mag" href="#rezervari">Rezervă o masă</a>
+      <a class="btn btn-ghost" href="#pian">Cântă la pian</a>
+    </div>
+  </div>
+
+  <aside class="tonight" aria-label="Următorul concert">
+    <p class="t-label" id="tLabel">Următorul concert</p>
+    <h2 id="tName">Se încarcă</h2>
+    <p class="t-meta" id="tMeta"></p>
+    <div class="count" id="count" aria-live="off">
+      <span><b id="cH">00</b>ore</span>
+      <span><b id="cM">00</b>minute</span>
+      <span><b id="cS">00</b>secunde</span>
+    </div>
+    <div class="eq" id="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <a class="btn btn-sm" href="#program">Vezi programul</a>
+  </aside>
+</section>
+
+<div class="ticker" aria-label="Concerte din această săptămână"><div class="track" id="tickerTrack"></div></div>
+
+<section class="stats" aria-label="Bemol în cifre">
+  <div><b data-count="6">0</b><span>seri de concert pe săptămână</span></div>
+  <div><b data-count="80">0</b><span>locuri, toate aproape de scenă</span></div>
+  <div><b data-count="240">0</b><span>concerte pe an</span></div>
+  <div><b data-count="88">0</b><span>clape, una singură voce</span></div>
+</section>
+
+<section class="section reveal" id="program">
+  <h2>Programul săptămânii</h2>
+  <div class="days" id="days" role="group" aria-label="Alege ziua"></div>
+  <ul class="sets" id="sets" aria-live="polite"></ul>
+</section>
+
+<section class="section reveal" id="pian">
+  <h2>Cântă tu la pian.</h2>
+  <p class="sub">Apasă clapele cu mouse-ul sau cu degetul, trage peste ele pentru glissando sau folosește tastatura calculatorului. Cu cât apeși mai jos pe clapă, cu atât sună mai tare.</p>
+  <div class="piano-card">
+    <canvas id="scope" aria-hidden="true"></canvas>
+    <p class="readout" id="readout" aria-live="polite">Apasă o clapă</p>
+    <div class="piano-wrap">
+      <div class="piano-inner">
+        <div class="piano" id="piano" role="group" aria-label="Pian cu 29 de clape, de la Do 3 la Mi 5"></div>
+      </div>
+    </div>
+    <div class="piano-tools">
+      <button type="button" class="btn btn-sm" id="demoBtn">Ascultă o frază de jazz</button>
+      <button type="button" class="btn btn-sm btn-ghost" id="recBtn" aria-pressed="false"><i class="dot"></i><span>Înregistrează</span></button>
+      <button type="button" class="btn btn-sm btn-ghost" id="replayBtn" disabled>Redă înregistrarea</button>
+      <button type="button" class="btn btn-sm btn-ghost" id="pedalBtn" aria-pressed="false">Pedală</button>
+    </div>
+    <p class="hint">Tastatură: rândul Z X C V B N M cântă notele albe, iar S D G H J sunt clapele negre. Rândul Q W E R T Y U cântă octava de sus, cu 2 3 5 6 7 ca negre. Spațiul ține pedala.</p>
+  </div>
+</section>
+
+<section class="section reveal" id="meniu">
+  <div class="split">
+    <div>
+      <h2>Ce bei și ce guști.</h2>
+      <p class="sub">Cocktailuri scurte, vinuri alese de sommelierul nostru și gustări bune de împărțit la masă.</p>
+      <div class="tabs" id="menuTabs" role="group" aria-label="Categorie meniu">
+        <button type="button" data-cat="cocktails" aria-pressed="true">Cocktailuri</button>
+        <button type="button" data-cat="wine" aria-pressed="false">Vinuri</button>
+        <button type="button" data-cat="bites" aria-pressed="false">Gustări</button>
+      </div>
+    </div>
+    <ul class="menu" id="menuList" aria-live="polite"></ul>
+  </div>
+</section>
+
+<section class="section reveal" id="rezervari">
+  <div class="split">
+    <div>
+      <h2>Rezervă o masă lângă scenă.</h2>
+      <p class="sub">Alege ziua și concertul. Păstrăm masa până cu 15 minute după începerea setului.</p>
+      <p class="open-pill" id="openPill"></p>
+    </div>
+    <div>
+      <form id="form" novalidate>
+        <label>Data<input type="date" name="date" id="fDate" required><small></small></label>
+        <label>Concert<select name="set" id="fSet" required><option value="">Alege mai întâi data</option></select><small></small></label>
+        <div class="row2">
+          <div class="field">
+            <span class="lab" id="gLab">Persoane</span>
+            <div class="stepper" role="group" aria-labelledby="gLab">
+              <button type="button" id="gMinus" aria-label="Mai puține persoane">−</button>
+              <output id="gOut">2</output>
+              <button type="button" id="gPlus" aria-label="Mai multe persoane">+</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="lab" id="zLab">Zona</span>
+            <div class="seg" id="zone" role="group" aria-labelledby="zLab">
+              <button type="button" aria-pressed="true" data-z="Lângă scenă">Scenă</button>
+              <button type="button" aria-pressed="false" data-z="La masă">Masă</button>
+              <button type="button" aria-pressed="false" data-z="La bar">Bar</button>
+            </div>
+          </div>
+        </div>
+        <label>Nume<input name="name" autocomplete="name" required><small></small></label>
+        <label>Email<input name="email" type="email" autocomplete="email" required><small></small></label>
+        <button class="btn" type="submit">Confirmă rezervarea</button>
+      </form>
+      <div class="ticket" id="ticket" hidden role="status"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="locul">
+  <h2>Vino la noi.</h2>
+  <div class="split">
+    <div class="place">
+      <p>Strada Pianului 7, Centrul Vechi.<br>Intrarea e printr-o curte mică, sub felinarul roșu.</p>
+      <p><a class="link" href="mailto:rezervari@bemol.example">rezervari@bemol.example</a></p>
+    </div>
+    <ul class="hours" id="hours"></ul>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><span>Bemol</span><p>© 2026 Bemol Jazz Club. Prezentare conceptuală, programul și prețurile sunt exemple.</p></footer>
+</body>
+</html>
